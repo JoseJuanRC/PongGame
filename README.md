@@ -53,6 +53,7 @@ Este proyecto tiene como objetivo desarrollar un juego similar al Pong para dos 
 - Tamaño de jugador de 5x40
 - Cada partida es a 3 puntos
 - Tamaño del juego de 500 x 500
+- Se requiere de tener en la misma carpeta los distintos sonidos y el ejecutable
 
 ## Resultado final
 A continuación se ve un ejemplo del juego:
