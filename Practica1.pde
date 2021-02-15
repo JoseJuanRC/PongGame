@@ -19,8 +19,12 @@ SoundFile reboundSound;
 SoundFile scoreSound;
 SoundFile victorySound;
 
+// Pantalla de inicio
+boolean isInIntro;
+
 void setup() {
   size(500,500);
+  isInIntro = true;
   f = createFont("Arial",26,true); 
   maxScore = 3;
   
@@ -54,8 +58,7 @@ void init() {
   score2 = 0;
   hitPlayer1 = false;
   hitPlayer2 = false;
-  
-  
+
   // Inicializar bola
   cx=width/2;
   cy=height/2;
@@ -84,10 +87,13 @@ void calculateDefaultInc() {
  
   
 }
-
+int x;
 void draw() {
   background(0);
-  if (score1 < maxScore && score2 < maxScore) {
+  
+  if (isInIntro)
+    drawIntro();
+  else if (score1 < maxScore && score2 < maxScore) {
     drawField();
   
     // Dibujamos la linea del centro
@@ -96,6 +102,27 @@ void draw() {
     drawBall();
   } else
     drawEndScreen();
+}
+
+void drawIntro() {
+  textAlign(CENTER);
+  f = createFont("Arial",62,true); 
+  textFont(f);
+  text("Pong",width/2,height/5); 
+  
+  textAlign(LEFT);
+  f = createFont("Arial",24,true); 
+  textFont(f);
+  text("Controles",width/20,height/3); 
+  f = createFont("Arial",20, true); 
+  textFont(f);
+  text("Player 1:     Movimiento arriba/abajo: Teclas w/s",width/20,height/2.4);
+  text("Player 2:     Movimiento arriba/abajo: Flechas",width/20,height/2.0);  
+
+  textAlign(CENTER);
+  f = createFont("Arial",16,true); 
+  textFont(f);
+  text("Pulsa enter para jugar",width/2,height/1.25); 
 }
 
 void drawEndScreen() {
@@ -150,9 +177,11 @@ void keyPressed() {
     if (keyCode == UP) inc2 = -playerVelocity;
     else if (keyCode == DOWN) inc2 = playerVelocity;
     
-  if (keyCode == ENTER && (score1 == maxScore || score2 == maxScore)) 
-    init();
-
+  if (keyCode == ENTER) {
+    if (isInIntro) isInIntro = false;
+    else if (score1 == maxScore || score2 == maxScore)
+      init();
+  }
 }
 
 void keyReleased() {
